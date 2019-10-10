@@ -17,10 +17,5 @@ public class Commander {
 		}
 		return cmd;
 
-		
-		
-		
-		
-		
 	}
 }
