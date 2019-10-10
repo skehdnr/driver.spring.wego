@@ -16,9 +16,7 @@ public class Commander {
 		default : break; 
 		}
 		return cmd;
-		
-		
-		
+
 		
 		
 		
