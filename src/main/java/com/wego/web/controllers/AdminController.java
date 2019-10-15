@@ -31,5 +31,5 @@ public class AdminController {
 		
 		return "home";
 	}
-	
+	//test
 }
