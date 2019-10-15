@@ -1,7 +1,5 @@
 package com.wego.web.controllers;
 
-import java.util.Locale;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,28 +7,28 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import com.wego.web.serviceimpl.AdminServiceImpl;
+import org.springframework.web.bind.annotation.RequestParam;
 
-/**
- * Handles requests for the application home page.
- */
+import com.wego.web.serviceimpl.AdminServiceImpl;
+import com.wego.web.services.AdminService;
+
+
+
 @Controller
-public class HomeController {
-	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
+@RequestMapping("/admin/*")
+public class AdminController {
+	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	@Autowired AdminServiceImpl adminService;
 	
-	@GetMapping("/")
-	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! {}.", "HomeController");
+	@GetMapping("/count")
+	public String count (Model model) {
 		int count = adminService.findTheNumberOfAdmins();
-		model.addAttribute("count", count );
+		model.addAttribute("count",count);
 		return "home";
 	}
-	
+	@GetMapping("/info")
+	public String findAdminbyId(@RequestParam("eid") String eid, @RequestParam("pwd") String pwd) {
+		
+		return "home";
+	}
 }
