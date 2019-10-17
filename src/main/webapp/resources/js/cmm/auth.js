@@ -275,8 +275,8 @@ auth=(()=>{
 			 $('<button>',{
             text: '회원가입',
             href: '#',
-            type: 'submit',
-            click : ()=>{
+            click : e =>{
+            	e.preventDefault();
               let data = { uid : $('#userid').val(), 
             		  	pwd : $('#password').val() }
               alert('전송되는 데이터 : '+data.uid)
@@ -295,7 +295,7 @@ auth=(()=>{
               })
               }
          })
-			.addClass('btn btn-primary btn-lg btn-black')
+			.addClass('btn btn-primary btn-lg btn-block')
 			.appendTo('#btn_join')				
 		});
 	}
