@@ -25,13 +25,25 @@ public class UserController {
 	@Autowired Map<String, Object>map;	
 	@PostMapping("/join")
 	public @ResponseBody Map<?,?> join(@RequestBody UserDTO user) {
-			logger.info("AJAX 가 보낸 아이디와 비밀번호 {},",user.getUid()+","+user.getPwd());	
+	logger.info("AJAX 가 보낸 아이디와 비밀번호 {},",user.getUid()+","+user.getPwd());	
 	Map<String,String> map= new HashMap<>();
 		
 	map.put("uid", user.getUid());
 	map.put("pwd", user.getPwd());
 	logger.info("MAP에 담긴 아이디와 비번{}",map.get("uid")+","+map.get("pwd"));
 	return map;
+	}
+	@PostMapping("/login")
+	public @ResponseBody Map<?,?> login (@RequestBody UserDTO user){
+		logger.info("AJAX 로그인 후 아이디 비밀번호{},",user.getUid()+","+user.getPwd());
+		Map<String,String> map = new HashMap<>();
+		map.put("uid", user.getUid());
+		map.put("pwd", user.getPwd());
+		System.out.println(user.getUid());
+		logger.info("MAP 에 담겨져져져져져져져있는 아이디와 비번 {}",map.get("uid")+","+map.get("pwd"));
+		return map;
 		
 	}
+	
+	
 }
