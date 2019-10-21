@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wego.web.domains.UserDTO;
+import com.wego.web.serviceimpl.UserServiceImpl;
 
 
 @Controller
@@ -23,25 +24,40 @@ import com.wego.web.domains.UserDTO;
 public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	@Autowired Map<String, Object>map;	
+	@Autowired UserDTO user;
+	@Autowired UserServiceImpl userserviceimpl;
+	
 	@PostMapping("/join")
-	public @ResponseBody Map<?,?> join(@RequestBody UserDTO user) {
-	logger.info("AJAX 가 보낸 아이디와 비밀번호 {},",user.getUid()+","+user.getPwd());	
-	Map<String,String> map= new HashMap<>();
-		
-	map.put("uid", user.getUid());
-	map.put("pwd", user.getPwd());
-	logger.info("MAP에 담긴 아이디와 비번{}",map.get("uid")+","+map.get("pwd"));
-	return map;
+	public @ResponseBody Map<?,?> join(@RequestBody UserDTO param) {
+		logger.info("AJAX 가 보낸 아이디와 비밀번호 {}",param.getUid()+","+param.getPwd()+","+param.getUname());	
+		user.setUid(param.getUid());
+		user.setPwd(param.getUid());
+		user.setUname(param.getUname());
+		user.setBirth(param.getBirth());
+		user.setGender(param.getGender());
+		user.setPettype(param.getPettype());
+		user.setTel(param.getTel());
+		userserviceimpl.join(param);
+		Map<String,Object> map = new HashMap<>();
+		map.put("uid", param.getUid());
+		map.put("pwd", param.getPwd());
+		map.put("uname", param.getUname());
+		map.put("birth", param.getBirth());
+		map.put("gender", param.getGender());
+		map.put("pettype", param.getPettype());
+		map.put("tel", param.getTel());
+		logger.info("MAP에 담긴 아이디와 비번{}",map.get("uid")+","+map.get("pwd")+","+map.get("uname"));
+		return map;
 	}
 	@PostMapping("/login")
-	public @ResponseBody Map<?,?> login (@RequestBody UserDTO user){
-		logger.info("AJAX 로그인 후 아이디 비밀번호{},",user.getUid()+","+user.getPwd());
-		Map<String,String> map = new HashMap<>();
-		map.put("uid", user.getUid());
-		map.put("pwd", user.getPwd());
-		System.out.println(user.getUid());
-		logger.info("MAP 에 담겨져져져져져져져있는 아이디와 비번 {}",map.get("uid")+","+map.get("pwd"));
-		return map;
+	public @ResponseBody UserDTO login (@RequestBody UserDTO param){
+		logger.info("AJAX 로그인 후 아이디 비밀번호{}",param.getUid()+","+param.getPwd()+","+param.getUname());
+		user.setUid(param.getUid());
+		user.setPwd(param.getPwd());
+		user.setUname(param.getUname());
+		user=userserviceimpl.login(param);
+		logger.info("user 에 담긴 사용자 정보 {}",user.toString());
+		return user;
 		
 	}
 	

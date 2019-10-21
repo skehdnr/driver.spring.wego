@@ -29,7 +29,8 @@ auth = (()=>{
             href: '#',
             click: e=>{
                 e.preventDefault();
-                let data = {uid:$('#userid').val(),pwd:$('#password').val()}
+                let data = {uid:$('#uid').val(),pwd:$('#pwd').val(),uname:$('#uname').val(),birth:$('#birth').val(),gender:$('#gender').val()
+                		,tel:$('#tel').val(),pettype:$('#pettype').val()}
                 $.ajax({
                     url:_+'/user/join',
                     type: 'POST',
@@ -37,11 +38,11 @@ auth = (()=>{
                     data : JSON.stringify(data),
                     contentType : 'application/json',
                     success : d =>{
-                        alert('에이작스 성공'+ d.uid+','+d.pwd);    
+                        alert('에이작스 성공'+ d.uid+','+d.pwd+','+d.uname);    
                         login()
                     },
                     error : e =>{
-                        alert('에이작스실패');
+                        alert('에이작스실패 join');
                     }
                 })
             }
@@ -52,7 +53,6 @@ auth = (()=>{
 
     let login=()=>{
         let x ={css:$.css(),img:$.img()}
-        alert('x.css'+x.css)
         $('head').html(auth_vue.login_head(x)),
         $('body').html(auth_vue.login_body(x))
         .addClass('text-center')
@@ -61,26 +61,40 @@ auth = (()=>{
             text : "Sign in",
             click : e=>{
                 e.preventDefault()
-                let data =  {uid:$('#uid').val(),pwd:$('#pwd').val()}
                 $.ajax({
                     url:_+'/user/login',
-                    type: 'POST',
+                    type:'POST',
                     dataType:'json',
-                    data : JSON.stringify(data),
+                    data: JSON.stringify({uid:$('#uid').val(),pwd:$('#pwd').val(),uname:$('#uname').val()
+                    	,birth:$('#birth').val(),gender:$('#gender').val(),tel:$('#tel').val(),pettype:$('#pettype').val()}),
                     contentType : 'application/json',
                     success : d=>{
-                        alert('에이작스 성공'+ d.uid+','+d.pwd);    
+                        alert(d.uname+'님 환영합니다')
+                        mypage(d)
                     },
                     error : e=>{
-                        alert('에이작스실패');
+                        alert('에이작스실패 login')
                     }
                     
                 })    
             }
         }).addClass("btn btn-lg btn-primary btn-block")
         .appendTo('#btn_login')
-    
-        
     }
-    return {onCreate, join, login}
+    let mypage =d=>{
+    	let x = {
+    			uid : d.uid,
+    			pwd : d.pwd,
+    			uname : d.uname,
+    			birth : d.birth,
+    			gender : d.gender,
+    			tel : d.tel,
+    			pettype : d.pettype
+    			
+    	}
+        $('head').html(auth_vue.mypage_head(x))
+        $('body').html(auth_vue.mypage_body(x))
+    }
+    
+    return {onCreate, join, login, mypage}
 })();
