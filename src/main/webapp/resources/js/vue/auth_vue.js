@@ -327,7 +327,7 @@ auth_vue = {
 	mypage_body : x=>{
 		return '<body class="d-flex flex-column h-100">'+
 		'<main role="main" class="flex-shrink-0">'+
-		'  <div class="container2">'+
+		'  <div class="container">'+
 		'    <h1 class="mt-5">MyPage</h1>'+
 		'    <p class="lead">아이디 : '+x.uid+'</p>'+
 		'    <p>비밀번호 : '+ x.pwd+'</p>'+
